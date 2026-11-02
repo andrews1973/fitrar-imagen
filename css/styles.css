@@ -1,0 +1,36 @@
+/* Pequeño reset, recomiendo tambien resetear pseudoelementos after y before*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*Mobile first*/
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f4f6f8;
+    color: #333333;
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.botones button {
+  background-color: black;
+  padding: 1rem;
+  color: white;
+  border-radius: 8px;
+  min-width: 100px;
+  margin-right: 0.3rem;
+  cursor: pointer;
+}
+button:hover {
+  background-color: green;
+}
