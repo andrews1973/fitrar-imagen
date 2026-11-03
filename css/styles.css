@@ -110,6 +110,14 @@ main{
   font-size: 1.5rem;
 }
 
+.botones button {
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.botones button:hover {
+    transform: translateY(-3px);
+}
+
 @media (min-width: 992px) {
 
   #imagenes-peques article {
