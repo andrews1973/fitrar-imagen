@@ -30,7 +30,7 @@ const imagenesGaleria = [
         title: "Lorem ipsum dolor  2",
         descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
         alt: "Este es el alt de foto 2",
-        tag: ['Mar', 'Arena'],
+        tag: ['Mar', 'Arena', 'Puente'],
     },
     {
         src: "assets/viajes/viajes-3.jpg",
@@ -174,6 +174,7 @@ document.addEventListener('click', (ev) => {
 
         // Seleccionamos la primera imagen, la mostraremos en grande
         let imagenG = imagenesFiltradas[0];
+        let titulo =
 
         // Mostramos la imagen en grande
         imagenGrande.src = imagenG.src;

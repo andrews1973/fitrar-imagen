@@ -3,9 +3,9 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -14,33 +14,41 @@ a {
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }
 
 /*Mobile first*/
 
 body {
-    font-family: "Poppins", sans-serif;
-    background-color: #f4f6f8;
-    color: #333333;
-    line-height: 1.6;
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f6f8;
+  color: #333333;
+  line-height: 1.6;
 }
 
-.full-container{
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.full-container {
   width: 100%;
 }
 
 .container {
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
 }
 
-#imagenes-peques{
+#imagenes-peques {
   display: flex;
   flex-wrap: wrap;
 }
-
-
 
 #imagenes-peques article {
   width: 45%;
@@ -48,12 +56,14 @@ body {
   margin-right: 5%;
 }
 
-#imagenes-peques article:last-child{
+#imagenes-peques article:last-child {
   margin-right: 0;
 }
 
 .botones {
   margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
 }
 
 .botones button {
@@ -70,7 +80,8 @@ button:hover {
   background-color: green;
 }
 
-header, footer {
+header,
+footer {
   height: 10rem;
   background-color: black;
   color: white;
@@ -78,25 +89,23 @@ header, footer {
   justify-content: center;
   align-items: center;
 }
-footer{
+
+footer {
   height: 5rem;
+  position: fixed;
+  bottom: 0;
 }
 
-h1 {
-  font-size: 3rem;
-}
-
-h2{
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
+main{
+  padding-bottom: 8rem;
 }
 
 #imagenes-peques h2 {
   font-size: 1rem;
   margin-bottom: 1rem;
 }
-#mensaje{
+
+#mensaje {
   padding: 2rem 0;
   font-size: 1.5rem;
 }
@@ -104,10 +113,9 @@ h2{
 @media (min-width: 992px) {
 
   #imagenes-peques article {
-  width: 30%;
-  cursor: pointer;
-  margin-right: 4%;
-}
-  
-}
+    width: 30%;
+    cursor: pointer;
+    margin-right: 4%;
+  }
 
+}
