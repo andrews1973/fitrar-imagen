@@ -74,10 +74,12 @@ h2 {
   min-width: 100px;
   margin-right: 0.3rem;
   cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease;
 }
 
 button:hover {
   background-color: green;
+  transform: translateY(-3px);
 }
 
 header,
@@ -110,13 +112,6 @@ main{
   font-size: 1.5rem;
 }
 
-.botones button {
-    transition: transform 0.25s ease, background-color 0.25s ease;
-}
-
-.botones button:hover {
-    transform: translateY(-3px);
-}
 
 @media (min-width: 992px) {
 
