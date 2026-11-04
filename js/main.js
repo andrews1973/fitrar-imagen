@@ -2,6 +2,18 @@
 pseudocodigo:
 
 1- Preparar html con header seccion donde se muestran las fotos y botones
+2- guardar en variables los selectores querySelector
+3- declarar e inicializar el array de objetos de imagenes
+4- funcion que crea los botones con javascript
+5- funcion que crea un nuevo array con todas las etiquetas que no se repitar. Filtramos las etiquetas
+en un nuevo array que incluya solo las que no se repiten
+6- funcion donde Recorremos este ultimo array de tags no repetidas y pintamos los botones
+7- capturar el click en los botones que acabamos de crear para que al hacer click se llame 
+a la funcion que filtra las imagenes por el tag o id del boton. La primera imagen del array sera la grande 
+el resto las pequeñas
+8- capturar el click en las imagenes pequeñas para que la pequeña donde he hecho click 
+se cambie por la grande, pintamos las imagenes pequeñas excepto la seleccionada, que pintaremos 
+en la grande
 
 */
 
@@ -9,6 +21,7 @@ const cabecera = document.querySelector("header");
 const botones = document.querySelector(".botones");
 const mensaje = document.querySelector("#mensaje");
 const galeria = document.querySelector("#imagenes");
+const titGrande = document.querySelector("#titGrande");
 const imagenGrande = document.querySelector("#imagen-grande > img");
 const imagenesPeques = document.querySelector("#imagenes-peques");
 
@@ -75,22 +88,22 @@ function generarArrayBotones() {
 
     for (let image of imagenesGaleria) {
 
-        for (let tag of image.tag) {
+        for (let tag of image.tag) { // recorremos el array tag
 
-            if (!textoBotones.includes(tag)) {
+            if (!textoBotones.includes(tag)) { // si el nuevo array no incluye el tag lo añado
                 textoBotones.push(tag);
             }
         }
     }
 
-    return textoBotones;
+    return textoBotones; // array con tags unicos
 }
 
 function generarBotones() {
 
-    const arrayTextoBotones = generarArrayBotones();
+    const arrayTextoBotones = generarArrayBotones(); // guardamos el array de tags unicos
 
-    arrayTextoBotones.forEach(element => {
+    arrayTextoBotones.forEach(element => { // por cada tag unico creo un boton
 
         let boton = document.createElement('button');
 
@@ -148,10 +161,22 @@ function filtrarImagenes(imagenesArray, texto) {
 }
 
 function mostrarMensaje(numeroImagenes, tag) {
-
-    let texto = `Se han encontrado <strong>${numeroImagenes} imágenes</strong> con el tag <strong>${tag}</strong>`;
+    let elemento = numeroImagenes == 1 ? 'imágen' : 'imágenes'
+    let texto = `Se han encontrado <strong>${numeroImagenes} ${elemento}</strong> con el tag <strong>${tag}</strong>`;
 
     mensaje.innerHTML = texto;
+}
+
+// simplemente seleccionamos la etiqueta img del html y actualizamos sus propiedades con las de la imagen
+// pasada por parámetro, tambien pintamos el titulo, en mayuscula
+function pintarImagenGrande (imagenSeleccionada){
+    imagenGrande.src = imagenSeleccionada.src;
+    imagenGrande.title = imagenSeleccionada.title;
+    imagenGrande.alt = imagenSeleccionada.alt;
+
+    titGrande.innerHTML ="" // reseteo
+    let tituloImagen = imagenGrande.title
+    titGrande.append(tituloImagen.toUpperCase())
 }
 
 generarBotones(); // generamos los botones a partir de las tags
@@ -172,15 +197,12 @@ document.addEventListener('click', (ev) => {
         // mostramos el texto con el tamaño del array y el texto filtro
         mostrarMensaje(imagenesFiltradas.length, textoBoton);
 
-        // Seleccionamos la primera imagen, la mostraremos en grande
+        // Seleccionamos la primera imagen, la mostraremos en grande con su titulo
         let imagenG = imagenesFiltradas[0];
-        let titulo =
 
-        // Mostramos la imagen en grande
-        imagenGrande.src = imagenG.src;
-        imagenGrande.title = imagenG.title;
-        imagenGrande.alt = imagenG.alt;
-
+        // Mostramos la imagen en grande y su titulo
+        pintarImagenGrande (imagenG)
+        
         // Pintamos las pequeñas pero excluyendo la grande
         pintarImagenesPeque(imagenesFiltradas, imagenG);
 
@@ -190,16 +212,14 @@ document.addEventListener('click', (ev) => {
     else if (ev.target.matches('#imagenes-peques img')) {
 
         // Buscamos la imagen seleccionada en el array original
-        // finde devuelve el primer objeto imagen del array que cumpla con la condicion
+        // find() devuelve el primer objeto imagen del array que cumpla con la condicion
         const imagenSeleccionada = imagenesGaleria.find(imagen => {
             return imagen.src === ev.target.getAttribute('src');
         });
 
-        // Actualizamos la imagen grande con los atributos de la imagen seleccionada
-        imagenGrande.src = imagenSeleccionada.src;
-        imagenGrande.title = imagenSeleccionada.title;
-        imagenGrande.alt = imagenSeleccionada.alt;
-
+        // Actualizamos la imagen grande
+        pintarImagenGrande (imagenSeleccionada)
+        
         // Recuperamos las imágenes del filtro actual
         const imagenesFiltradas = filtrarImagenes(imagenesGaleria, textoFiltroActual);
 
