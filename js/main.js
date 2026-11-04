@@ -167,8 +167,8 @@ function mostrarMensaje(numeroImagenes, tag) {
     mensaje.innerHTML = texto;
 }
 
-// simplemente seleccionamos la etiqueta img del html y actualizamos sus propiedades con las de la imagen
-// pasada por parámetro, tambien pintamos el titulo, en mayuscula
+// actualizamos las propiedades de de la img del html con las de la imagen que acabamos de hacer clic
+// tambien pintamos el titulo, en mayuscula
 function pintarImagenGrande (imagenSeleccionada){
     imagenGrande.src = imagenSeleccionada.src;
     imagenGrande.title = imagenSeleccionada.title;
@@ -188,13 +188,13 @@ document.addEventListener('click', (ev) => {
         // ev.target.tagName ==='BUTTON'
         let textoBoton = ev.target.id;
 
-        // Guardamos el filtro seleccionado (texto o el id del boton)
+        // Guardamos el filtro seleccionado (el id del boton que es uno de los tag)
         textoFiltroActual = textoBoton;
 
         // Filtramos las imágenes llamando a la funcion que fitra y pasandole el array de imganes y el texto filtro
         const imagenesFiltradas = filtrarImagenes(imagenesGaleria, textoBoton);
 
-        // mostramos el texto con el tamaño del array y el texto filtro
+        // mostramos el mensaje con el tamaño del array y el texto filtro
         mostrarMensaje(imagenesFiltradas.length, textoBoton);
 
         // Seleccionamos la primera imagen, la mostraremos en grande con su titulo
