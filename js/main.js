@@ -17,214 +17,353 @@ en la grande
 
 */
 
+/** @type {HTMLElement | null} */
 const cabecera = document.querySelector("header");
+
+/** @type {HTMLElement | null} */
 const botones = document.querySelector(".botones");
+
+/** @type {HTMLElement | null} */
 const mensaje = document.querySelector("#mensaje");
+
+/** @type {HTMLElement | null} */
 const galeria = document.querySelector("#imagenes");
+
+/** @type {HTMLElement | null} */
 const titGrande = document.querySelector("#titGrande");
+
+/** @type {HTMLImageElement | null} */
 const imagenGrande = document.querySelector("#imagen-grande > img");
+
+/** @type {HTMLElement | null} */
 const imagenesPeques = document.querySelector("#imagenes-peques");
 
-// Guardamos el tag seleccionado
-let textoFiltroActual = "";
+/** @type {HTMLInputElement | null} */
+const inputEtiqueta = document.querySelector("#etiqueta");
 
+/** @type {DocumentFragment} */
 const fragmento = document.createDocumentFragment();
 
+/**  Guardamos el tag seleccionado
+ * @type {string}
+ */
+let textoFiltroActual = "";
+
+/** array que guarda el texto o id de los botones
+ * @type {string[]}
+ */
+const textoFiltradores = [];
+
+/**
+ * @typedef {Object} ImagenGaleria
+ * @property {string} src - Ruta de la imagen.
+ * @property {string} title - Título de la imagen.
+ * @property {string} descripcion - Descripción detallada.
+ * @property {string} alt - Texto alternativo para accesibilidad.
+ * @property {string[]} tag - Lista de etiquetas asociadas a la imagen.
+ */
+
+/**
+ * @type {ImagenGaleria[]}
+ */
+
 const imagenesGaleria = [
-    {
-        src: "assets/viajes/viajes-1.jpg",
-        title: "Lorem ipsum dolor  1",
-        descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
-        alt: "Este es el alt de foto 1",
-        tag: ['Mar', 'Chica', 'Arena'],
-    },
-    {
-        src: "assets/viajes/viajes-2.jpg",
-        title: "Lorem ipsum dolor  2",
-        descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
-        alt: "Este es el alt de foto 2",
-        tag: ['Mar', 'Arena', 'Puente'],
-    },
-    {
-        src: "assets/viajes/viajes-3.jpg",
-        title: "Lorem ipsum dolor  3",
-        descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
-        alt: "Este es el alt de foto 3",
-        tag: ['Señales'],
-    },
-    {
-        src: "assets/viajes/viajes-4.jpg",
-        title: "Lorem ipsum dolor  4",
-        descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
-        alt: "Este es el alt de foto 4",
-        tag: ['Edificio', 'Puente'],
-    },
-    {
-        src: "assets/viajes/viajes-5.jpg",
-        title: "Lorem ipsum dolor  5",
-        descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
-        alt: "Este es el alt de foto 5",
-        tag: ['Edificio', 'Puente'],
-    },
-    {
-        src: "assets/viajes/viajes-6.jpg",
-        title: "Lorem ipsum dolor  6",
-        descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
-        alt: "Este es el alt de foto 6",
-        tag: ['Mar', 'Monte'],
-    },
-    {
-        src: "assets/viajes/viajes-7.jpg",
-        title: "Lorem ipsum dolor  7",
-        descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
-        alt: "Este es el alt de foto 7",
-        tag: ['Edificio', 'Monte'],
-    }
+  {
+    src: "assets/viajes/viajes-1.jpg",
+    title: "Lorem ipsum dolor  1",
+    descripcion:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
+    alt: "Este es el alt de foto 1",
+    tag: ["Mar", "Chica", "Arena"],
+  },
+  {
+    src: "assets/viajes/viajes-2.jpg",
+    title: "Lorem ipsum dolor  2",
+    descripcion:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
+    alt: "Este es el alt de foto 2",
+    tag: ["Mar", "Arena", "Puente"],
+  },
+  {
+    src: "assets/viajes/viajes-3.jpg",
+    title: "Lorem ipsum dolor  3",
+    descripcion:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
+    alt: "Este es el alt de foto 3",
+    tag: ["Señales"],
+  },
+  {
+    src: "assets/viajes/viajes-4.jpg",
+    title: "Lorem ipsum dolor  4",
+    descripcion:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
+    alt: "Este es el alt de foto 4",
+    tag: ["Edificio", "Puente"],
+  },
+  {
+    src: "assets/viajes/viajes-5.jpg",
+    title: "Lorem ipsum dolor  5",
+    descripcion:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
+    alt: "Este es el alt de foto 5",
+    tag: ["Edificio", "Puente"],
+  },
+  {
+    src: "assets/viajes/viajes-6.jpg",
+    title: "Lorem ipsum dolor  6",
+    descripcion:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
+    alt: "Este es el alt de foto 6",
+    tag: ["Mar", "Monte"],
+  },
+  {
+    src: "assets/viajes/viajes-7.jpg",
+    title: "Lorem ipsum dolor  7",
+    descripcion:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut bibendum elit. In vitae pharetra magna. Integer vel orci venenatis lorem pulvinar bibendum.",
+    alt: "Este es el alt de foto 7",
+    tag: ["Edificio", "Monte"],
+  },
 ];
 
-function generarArrayBotones() {
+/**
+ * Limpia el contenido HTML de un elemento de la galería.
+ * @param {HTMLElement} loQueQuieroLimpiar - El elemento HTML que se va a vaciar.
+ * @returns {void}
+ */
 
-    const textoBotones = [];
+const limpiar = (loQueQuieroLimpiar) => {
+  loQueQuieroLimpiar.innerHTML = "";
+};
 
-    for (let image of imagenesGaleria) {
+/**
+ * Genera un array con todas las etiquetas (tags) únicas extraídas
+ * de las imágenes de la galería, evitando duplicados.
+ *
+ * @returns {string[]} Un array de strings con los tags únicos.
+ */
 
-        for (let tag of image.tag) { // recorremos el array tag
-
-            if (!textoBotones.includes(tag)) { // si el nuevo array no incluye el tag lo añado
-                textoBotones.push(tag);
-            }
-        }
-    }
-
-    return textoBotones; // array con tags unicos
-}
-
-function pintarBotones() {
-
-    const arrayTextoBotones = generarArrayBotones(); // guardamos el array de tags unicos
-
-    arrayTextoBotones.forEach(element => { // por cada tag unico creo un boton
-
-        let boton = document.createElement('button');
-
-        boton.type = 'button';
-        boton.textContent = element;
-        boton.id = element;
-
-        fragmento.append(boton);
+const generarArrayBotones = () => {
+  imagenesGaleria.forEach((image) => {
+    // recorremos array con objetos de imagenes
+    image.tag.forEach((tag) => {
+      // recorremos el array tag
+      if (!textoFiltradores.includes(tag)) {
+        // si el nuevo array no incluye el tag lo añado
+        textoFiltradores.push(tag);
+      }
     });
+  });
 
-    botones.append(fragmento);
-}
+  return textoFiltradores; // array con tags unicos
+};
 
-function crearImagenPeque(imagen) {
+/**
+ *funcion que llama a la funcion que genera el array de tags unicos
+ *la recorre generando un boton por cada tags
+ *metemos los botones en un fragmento
+ *@returns {void} Esta función no devuelve ningún valor.
+ */
 
-    let contenedor = document.createElement('article');
+const pintarBotones = () => {
+  if (!botones) return;
 
-    let titulo = document.createElement('h4');
-    titulo.textContent = imagen.title;
+  const arraytextoFiltradores = generarArrayBotones(); // guardamos el array de tags unicos
 
-    let img = document.createElement('img');
-    img.src = imagen.src;
-    img.alt = imagen.alt;
-    img.title = imagen.title;
+  arraytextoFiltradores.forEach((element) => {
+    // por cada tag unico creo un boton
 
-    contenedor.append(titulo, img);
-    fragmento.append(contenedor);
-}
+    let boton = document.createElement("button");
 
-// le paso dos parametros un array de imagens y la imagen que no quiero pintar, la grande
-function pintarImagenesPeque(imagenesGaleria, imagenActual) {
+    boton.type = "button";
+    boton.textContent = element;
+    boton.id = element;
 
-    imagenesPeques.innerHTML = ""; // reseteamos borramos
+    fragmento.append(boton);
+  });
 
-    // devolvermos una array pero excluimos la imagen que se muestra en grande
-    const imagenesFiltradas = imagenesGaleria.filter(imagen => {
-        return imagen.src !== imagenActual.src;
-    });
+  botones.append(fragmento);
+};
+/**
+ * Crea la estructura HTML (article, h4 e img) para una imagen de la galería
+ * y la añade al fragmento en memoria.
+ *
+ * @param {ImagenGaleria} imagen - El objeto con la información de la imagen a renderizar.
+ * @returns {void} Esta función no devuelve ningún valor.
+ */
+const crearImagenPeque = (imagen) => {
+  let contenedor = document.createElement("article");
 
-    imagenesFiltradas.forEach(imagen => {
-        crearImagenPeque(imagen);
-    });
+  let titulo = document.createElement("h4");
+  titulo.textContent = imagen.title;
 
-    imagenesPeques.append(fragmento);
-}
+  let img = document.createElement("img");
+  img.src = imagen.src;
+  img.alt = imagen.alt;
+  img.title = imagen.title;
 
-// Devuelve un array con las imágenes que incluyen el tag
-function filtrarImagenes(imagenesArray, texto) {
+  contenedor.append(titulo, img);
+  fragmento.append(contenedor);
+};
 
-    const nuevoArray = imagenesArray.filter(imagen => {
-        return imagen.tag.includes(texto);
-    });
+/**
+ * Filtra la colección de imágenes para excluir la que se está mostrando en grande
+ * y renderiza el resto en el contenedor de miniaturas del DOM.
+ *
+ * @param {ImagenGaleria[]} imagenesGaleria - El array con las imágenes.
+ * @param {ImagenGaleria} imagenActual - El objeto de la imagen grande.
+ * @returns {void} Esta función no devuelve ningún valor.
+ */
+const pintarImagenesPeque = (imagenesGaleria, imagenActual) => {
+  if (!imagenesPeques || !imagenActual) {
+    return;
+  }
+  limpiar(imagenesPeques);
 
-    return nuevoArray;
-}
+  // devolvermos una array pero excluimos la imagen que se muestra en grande
+  const imagenesFiltradas = imagenesGaleria.filter((imagen) => {
+    return imagen.src !== imagenActual.src;
+  });
 
-function mostrarMensaje(numeroImagenes, tag) {
-    let elemento = numeroImagenes == 1 ? 'imágen' : 'imágenes'
-    let texto = `Se han encontrado <strong>${numeroImagenes} ${elemento}</strong> con el tag <strong>${tag}</strong>`;
+  imagenesFiltradas.forEach((imagen) => {
+    crearImagenPeque(imagen);
+  });
 
-    mensaje.innerHTML = texto;
-}
+  imagenesPeques.append(fragmento);
+};
 
-// actualizamos las propiedades de de la img del html con las de la imagen que acabamos de hacer clic
-// tambien pintamos el titulo, en mayuscula
-function pintarImagenGrande (imagenSeleccionada){
-    imagenGrande.src = imagenSeleccionada.src;
-    imagenGrande.title = imagenSeleccionada.title;
-    imagenGrande.alt = imagenSeleccionada.alt;
+/**
+ * Devuelve un array con las imágenes que incluyen el tag
+ *
+ * @param {ImagenGaleria[]} imagenesArray - Array de imágenes que se va a filtrar.
+ * @param {string} texto - La etiqueta (tag) por la que se desea filtrar.
+ * @returns {ImagenGaleria[]} Deveulve un nuevo array que contiene solo las imágenes que incluyen el tag.
+ */
+const filtrarImagenes = (imagenesArray, texto) => {
+  const nuevoArray = imagenesArray.filter((imagen) => {
+    return imagen.tag.includes(texto);
+  });
 
-    titGrande.innerHTML ="" // reseteo
-    let tituloImagen = imagenGrande.title
-    titGrande.append(tituloImagen.toUpperCase())
-}
+  return nuevoArray;
+};
+
+/**
+ * Muestra un mensaje dinámico en el DOM indicando la cantidad de imágenes encontradas
+ * para una etiqueta (tag) específica, controlando el plural del texto de forma automática.
+ *
+ * @param {number} numeroImagenes - La cantidad de imágenes que coinciden con el filtro.
+ * @param {string} tag - El nombre de la etiqueta por la cual se realizó la búsqueda.
+ * @returns {void} Esta función no devuelve ningún valor.
+ */
+const mostrarMensaje = (numeroImagenes, tag) => {
+  if (!mensaje) {
+    return;
+  }
+  let elemento = numeroImagenes == 1 ? "imágen" : "imágenes";
+  let texto = `Se han encontrado <strong>${numeroImagenes} ${elemento}</strong> con el tag <strong>${tag}</strong>`;
+
+  mensaje.innerHTML = texto;
+};
+
+/**
+ * Actualiza los atributos de la imagen principal y renderiza su título en mayúsculas.
+ *
+ * @param {ImagenGaleria | null} imagenSeleccionada - El objeto de la imagen que se va a mostrar.
+ * @returns {void} Esta función no devuelve ningún valor.
+ */
+const pintarImagenGrande = (imagenSeleccionada) => {
+  if (!imagenGrande || !titGrande || !imagenSeleccionada) {
+    return;
+  }
+  imagenGrande.src = imagenSeleccionada.src;
+  imagenGrande.title = imagenSeleccionada.title;
+  imagenGrande.alt = imagenSeleccionada.alt;
+
+  limpiar(titGrande); // limpiamos
+  let tituloImagen = imagenGrande.title;
+  titGrande.append(tituloImagen.toUpperCase());
+};
 
 pintarBotones(); // generamos los botones a partir de las tags
 
+/**
+ * Aplica un filtro a las imágenes de la galería y actualiza el contenido visual.
+ * Guarda el filtro seleccionado, muestra el número de imágenes encontradas,
+ * selecciona la primera imagen como principal y renderiza el resto como miniaturas.
+ *
+ * @param {string} textoFiltrador - Etiqueta utilizada para filtrar las imágenes.
+ * @returns {void} Esta función no devuelve ningún valor.
+ */
+
+// Función para aplicar el filtro y pintar las imágenes
+const aplicarFiltro = (textoFiltrador) => {
+  // Guardamos el filtro seleccionado
+  textoFiltroActual = textoFiltrador;
+
+  // Filtramos las imágenes
+  const imagenesFiltradas = filtrarImagenes(imagenesGaleria, textoFiltrador);
+
+  // Mostramos el mensaje con el número de imágenes y el filtro
+  mostrarMensaje(imagenesFiltradas.length, textoFiltrador);
+
+  // Seleccionamos la primera imagen
+  const imagenG = imagenesFiltradas[0];
+
+  // Mostramos la imagen grande y su título
+  pintarImagenGrande(imagenG);
+
+  // Pintamos las pequeñas excluyendo la grande
+  pintarImagenesPeque(imagenesFiltradas, imagenG);
+};
+
+/**
+ * Gestiona los eventos de clic mediante delegación de eventos.
+ *
+ * @listens Document#click
+ * @param {MouseEvent} ev - Objeto del evento que contiene información sobre el clic realizado.
+ * @returns {void} Esta función no devuelve ningún valor.
+ */
 // Delegación de eventos
-document.addEventListener('click', (ev) => {
+document.addEventListener("click", (ev) => {
+  if (!(ev.target instanceof Element)) {
+    return;
+  }
+  // Clic en los botones de etiquetas
+  if (ev.target.matches(".botones button")) {
+    const textoFiltrador = ev.target.id;
 
-    if (ev.target.matches('.botones button')) {
-        // ev.target.tagName ==='BUTTON'
-        let textoBoton = ev.target.id;
+    aplicarFiltro(textoFiltrador);
+  }
 
-        // Guardamos el filtro seleccionado (el id del boton que es uno de los tag)
-        textoFiltroActual = textoBoton;
-
-        // Filtramos las imágenes llamando a la funcion que fitra y pasandole el array de imganes y el texto filtro
-        const imagenesFiltradas = filtrarImagenes(imagenesGaleria, textoBoton);
-
-        // mostramos el mensaje con el tamaño del array y el texto filtro
-        mostrarMensaje(imagenesFiltradas.length, textoBoton);
-
-        // Seleccionamos la primera imagen, la mostraremos en grande con su titulo
-        let imagenG = imagenesFiltradas[0];
-
-        // Mostramos la imagen en grande y su titulo
-        pintarImagenGrande (imagenG)
-        
-        // Pintamos las pequeñas pero excluyendo la grande
-        pintarImagenesPeque(imagenesFiltradas, imagenG);
-
+  // Clic en el botón del formulario
+  else if (ev.target.matches("#formularioEtiquetas button")) {
+    if (!inputEtiqueta) {
+      return;
     }
 
-    // CLIC EN LAS IMÁGENES PEQUEÑAS
-    else if (ev.target.matches('#imagenes-peques img')) {
+    const textoFiltrador = inputEtiqueta.value;
 
-        // Buscamos la imagen seleccionada en el array original
-        // find() devuelve el primer objeto imagen del array que cumpla con la condicion
-        const imagenSeleccionada = imagenesGaleria.find(imagen => {
-            return imagen.src === ev.target.getAttribute('src');
-        });
+    aplicarFiltro(textoFiltrador);
+  }
 
-        // Actualizamos la imagen grande
-        pintarImagenGrande (imagenSeleccionada)
-        
-        // Recuperamos las imágenes del filtro actual
-        const imagenesFiltradas = filtrarImagenes(imagenesGaleria, textoFiltroActual);
+  // Clic en las imágenes pequeñas
+  else if (ev.target.matches("#imagenes-peques img")) {
+    
+    // Buscamos la imagen seleccionada en el array original
+    const imagenSeleccionada = imagenesGaleria.find((imagen) => {
+      return imagen.src === ev.target.getAttribute("src");
+    });
 
-        // Pintamos las pequeñas excluyendo la imagen seleccionada
-        pintarImagenesPeque(imagenesFiltradas, imagenSeleccionada);
-    }
+    // Actualizamos la imagen grande
+    pintarImagenGrande(imagenSeleccionada);
 
+    // Recuperamos las imágenes del filtro actual
+    const imagenesFiltradas = filtrarImagenes(
+      imagenesGaleria,
+      textoFiltroActual,
+    );
+
+    // Pintamos las pequeñas excluyendo la imagen seleccionada
+    pintarImagenesPeque(imagenesFiltradas, imagenSeleccionada);
+  }
 });

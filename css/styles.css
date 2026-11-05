@@ -130,8 +130,22 @@ main {
 #mensaje {
   padding: 2rem 0;
   font-size: 1.5rem;
+  text-align: center;
 }
 
+.formularioBusqueda{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formularioBusqueda input {
+  padding: 0.5rem 0.2rem;
+}
+
+.formularioBusqueda button {
+  padding: 0.5rem;
+}
 
 @media (min-width: 992px) {
 
