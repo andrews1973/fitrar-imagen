@@ -99,7 +99,7 @@ function generarArrayBotones() {
     return textoBotones; // array con tags unicos
 }
 
-function generarBotones() {
+function pintarBotones() {
 
     const arrayTextoBotones = generarArrayBotones(); // guardamos el array de tags unicos
 
@@ -121,7 +121,7 @@ function crearImagenPeque(imagen) {
 
     let contenedor = document.createElement('article');
 
-    let titulo = document.createElement('h2');
+    let titulo = document.createElement('h4');
     titulo.textContent = imagen.title;
 
     let img = document.createElement('img');
@@ -179,7 +179,7 @@ function pintarImagenGrande (imagenSeleccionada){
     titGrande.append(tituloImagen.toUpperCase())
 }
 
-generarBotones(); // generamos los botones a partir de las tags
+pintarBotones(); // generamos los botones a partir de las tags
 
 // Delegación de eventos
 document.addEventListener('click', (ev) => {
