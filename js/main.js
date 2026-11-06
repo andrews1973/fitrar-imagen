@@ -158,6 +158,11 @@ const generarArrayBotones = () => {
   return textoFiltradores; // array con tags unicos
 };
 
+/*
+const tagsUnicos = [...new Set(imagenesGaleria.flatMap(image => image.tag))];
+console.log(tagsUnicos); // ["Mar", "Chica", "Arena", "Puente", "Señales", "Edificio", "Monte"]
+*/
+
 /**
  *funcion que llama a la funcion que genera el array de tags unicos
  *la recorre generando un boton por cada tags
